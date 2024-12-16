@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>茄芷袋展示網站</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            background-color: #f4f6f7;
+            transition: margin 0.3s ease; /* 頁面內容平移的過渡效果 */
+        }
+
+        /* Header區域 */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #34495e;
+            padding: 10px 20px;
+            color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-sizing: border-box;
+            background-image: url('https://www.example.com/header-background.jpg'); /* 背景圖片 */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .site-title {
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .social-bar {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-size: cover;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        /* Facebook */
+        .social-icon.facebook {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg');
+        }
+
+        .social-icon.instagram {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg');
+        }
+
+        .social-icon.line {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg');
+        }
+
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Navigation menu block */
+        nav {
+            width: 220px;
+            background-color: #2c3e50;
+            color: white;
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: left 0.3s ease, right 0.3s ease;
+            background-image: url('https://www.example.com/nav-background.jpg');
+            background-size: cover;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            padding: 15px 20px;
+            display: block;
+            transition: background-color 0.3s ease;
+            font-size: 18px;
+        }
+
+        nav a:hover {
+            background-color: #34495e;
+        }
+
+        .toggle-button {
+            text-decoration: none;
+            color: white;
+            padding: 12px 18px;
+            background-color: #1abc9c;
+            text-align: center;
+            margin: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .toggle-button:hover {
+            background-color: #16a085;
+        }
+
+        /* Main content */
+        main {
+            margin: 80px 20px 20px;
+            flex: 1;
+            transition: margin-left 0.3s ease, margin-right 0.3s ease; /* 內容的平移效果 */
+        }
+
+        section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background-color: #ecf0f1;
+            margin-bottom: 20px;
+        }
+
+        section h2 {
+            margin-top: 0;
+            font-size: 36px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        /* 選單位置調整 */
+        .left-nav nav {
+            left: 0;
+            right: auto;
+        }
+
+        .right-nav nav {
+            left: auto;
+            right: 0;
+        }
+
+		#FAQ {
+			background-color: #ecf0f1;
+			padding: 40px 20px;
+			color: #2c3e50;
+			text-align: left;
+		}
+
+		#FAQ h2 {
+			font-size: 36px;
+			font-weight: bold;
+			text-align: center;
+			margin-bottom: 30px;
+			color: #1abc9c;
+		}
+
+		.faq-container {
+			display: flex;
+			flex-wrap: wrap; /* 允許換行 */
+			justify-content: space-between; /* 平均分配空間 */
+		}
+
+		.faq-item {
+			background-color: #fff;
+			margin-bottom: 15px;
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			width: 32%; /* 每個問題佔據33%寬度，這樣每行顯示3個問題 */
+			box-sizing: border-box; /* 保證padding不會影響寬度 */
+		}
+
+		.faq-item h3 {
+			font-size: 20px;
+			font-weight: bold;
+			margin-bottom: 10px;
+			color: #34495e;
+			cursor: pointer;
+			transition: color 0.3s ease;
+		}
+
+		.faq-item h3:hover {
+			color: #1abc9c;
+		}
+
+		.faq-item p {
+			font-size: 16px;
+			line-height: 1.5;
+			color: #7f8c8d;
+		}
+		
+		/* 產品背景部分 */
+		#history {
+			background-color: #f5f5f5; /* 淡灰色背景 */
+			padding: 40px 20px;
+			color: #2c3e50; /* 深色文字 */
+			font-size: 18px;
+			line-height: 1.8;
+			text-align: center;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			margin: 20px auto;
+			max-width: 960px;
+		}
+
+		#history h2 {
+			font-size: 36px;
+			color: #1abc9c; /* 機能性和文化感兼具的顏色 */
+			font-weight: bold;
+			margin-bottom: 20px;
+			text-align: center;
+		}
+
+		#history p {
+			font-size: 18px;
+			color: #34495e; /* 深灰色文字 */
+			margin-bottom: 15px;
+			text-align: left;
+			text-indent: 2em;
+		}
+
+		/* 產品介紹部分 */
+		#product {
+			background-color: #f5f5f5; /* 淡灰色背景 */
+			padding: 40px 20px;
+			color: #2c3e50; /* 深色文字 */
+			font-size: 18px;
+			line-height: 1.8;
+			text-align: center;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			margin: 20px auto;
+			max-width: 960px;
+		}
+
+		#product h2 {
+			font-size: 36px;
+			color: #1abc9c; /* 機能性和文化感兼具的顏色 */
+			font-weight: bold;
+			margin-bottom: 20px;
+			writing-mode: vertical-rl; /* 垂直文字排版 */
+			white-space: nowrap;
+		}
+
+		#product p {
+			font-size: 18px;
+			color: #34495e; /* 深灰色文字 */
+			margin-bottom: 30px;
+		}
+
+		.product-images {
+			display: flex;
+			justify-content: space-around;
+			margin-bottom: 30px;
+		}
+
+		.product-image img {
+			width: 300px;
+			height: 300px;
+			cursor: pointer;
+			transition: transform 0.3s ease;
+		}
+
+		.product-image img:hover {
+			transform: scale(1.05);
+		}
+
+		.product-description {
+    display: none;
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+		.product-description h3 {
+			color: #1abc9c;
+			margin-bottom: 15px;
+		}
+
+		.product-description p {
+			font-size: 18px;
+			color: #34495e;
+			line-height: 1.8;
+		}
+
+		.product-title {
+			font-size: 18px;
+			color: #34495e; /* 深灰色文字 */
+			margin-top: 10px;
+			font-weight: bold;
+			transition: color 0.3s ease, text-shadow 0.3s ease; /* 增加顏色和陰影變化的過渡效果 */
+		}
+
+		.product-title:hover {
+			color: #1abc9c; /* 當滑鼠懸停時，改變顏色為綠色 */
+			cursor: pointer; /* 當滑鼠懸停時顯示指針 */
+			text-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3); /* 添加陰影效果 */
+		}
+
+		#case {
+			background-color: #f5f5f5; /* 淡灰色背景 */
+					padding: 40px 20px;
+					color: #2c3e50; /* 深色文字 */
+					font-size: 18px;
+					line-height: 1.8;
+					text-align: center;
+					border-radius: 8px;
+					box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+					margin: 20px auto;
+					max-width: 960px;
+		}
+
+		#case h2 {
+			font-size: 36px;
+			color: #1abc9c; /* 機能性和文化感兼具的顏色 */
+			font-weight: bold;
+			margin-bottom: 20px;
+			writing-mode: vertical-rl; /* 垂直文字排版 */
+			white-space: nowrap;
+			margin-left: -20px; /* 調整此值來改變標題的左移距離 */
+		}
+
+
+		#case p {
+			font-size: 18px;
+			color: #34495e;
+			margin-bottom: 30px;
+		}
+
+		.case-container {
+			display: flex;
+			justify-content: space-around;
+			gap: 30px;
+			flex-wrap: wrap;
+			margin-top: 20px;
+		}
+
+		.case-card {
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			width: 300px;
+			text-align: center;
+			transition: transform 0.3s ease, box-shadow 0.3s ease;
+		}
+
+		.case-card:hover {
+			transform: translateY(-10px);
+			box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+		}
+
+		.quote {
+			font-size: 18px;
+			color: #34495e;
+			font-style: italic;
+			margin-bottom: 15px;
+		}
+
+		.customer {
+			font-size: 16px;
+			font-weight: bold;
+			color: #1abc9c;
+		}
+
+		/* 聯絡區域樣式 */
+		#contact {
+			background-color: #f9f9f9;
+			padding: 40px;
+			text-align: center;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			margin: 20px auto;
+			max-width: 960px;
+		}
+
+		/* 主要容器，表單和聯絡資訊並排 */
+		.contact-container {
+			display: flex;
+			justify-content: space-between;
+			gap: 30px;
+		}
+
+		/* 聯絡標題區塊 */
+		.contact-title {
+			writing-mode: vertical-rl;  /* 垂直排列文字 */
+			text-align: center;
+			font-size: 36px;
+			font-weight: bold;
+			align-self: flex-start;  /* 將標題對齊容器的上端 */
+		}
+
+		/* 聯絡表單樣式 */
+		#contact-form {
+			display: flex;
+			flex-direction: column;
+			align-items: stretch;
+			background-color: #fff;
+			padding: 30px;
+			border-radius: 10px;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+			margin-top: 20px;
+			max-width: 500px;
+			width: 100%;
+			margin-left: 50px;
+		}
+
+		#contact-form input,
+		#contact-form textarea {
+			width: 100%;
+			padding: 14px;
+			font-size: 16px;
+			margin-bottom: 20px;
+			border: 1px solid #ccc;
+			border-radius: 6px;
+			background-color: #f8f8f8;
+		}
+
+		#contact-form button {
+			padding: 14px 35px;
+			font-size: 18px;
+			background-color: #1abc9c;
+			color: white;
+			border: none;
+			border-radius: 6px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+			align-self: center;
+		}
+
+		#contact-form button:hover {
+			background-color: #16a085;
+		}
+
+		/* 聯絡資訊區塊 */
+		.contact-info {
+			background-color: #fff;
+			padding: 30px;
+			border-radius: 10px;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+			width: 100%;
+			max-width: 400px;
+			margin-left: 50px;
+		}
+
+		.contact-info h3,
+		.contact-info h4 {
+			font-size: 22px;
+			color: #34495e;
+			margin-bottom: 15px;
+			text-align: left; /* 標題左對齊 */
+		}
+
+		.contact-info p {
+			font-size: 16px;
+			color: #7f8c8d;
+			text-align: left;
+		}
+
+		.contact-info a {
+			font-size: 16px;
+			color: #1abc9c;
+			text-decoration: none;
+			transition: color 0.3s ease;
+		}
+
+		.contact-info a:hover {
+			color: #16a085;
+		}
+
+		/* 社群連結按鈕 */
+		.social-links {
+			display: flex;
+			gap: 15px;
+			margin-top: 20px;
+			justify-content: flex-start; /* 按鈕對齊左側 */
+		}
+
+		.social-button img {
+			width: 40px;  /* 你可以根據需求調整大小 */
+			height: 40px;
+			transition: transform 0.3s ease;
+		}
+
+		.social-button img:hover {
+			transform: scale(1.1); /* 圖片懸停效果 */
+		}
+
+		/* 首頁整體樣式 */
+		#index {
+			background-color: #f9f9f9;
+			padding: 60px 20px;
+			text-align: center;
+			color: #34495e;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			margin: 0 auto;
+			max-width: 1200px;
+		}
+
+		.index-container {
+			width: 100%;
+			max-width: 1000px;
+			margin: 0 auto;
+		}
+
+		#index h2 {
+			font-size: 36px;
+			color: #1abc9c;
+			font-weight: bold;
+			margin-bottom: 20px;
+		}
+
+		#index p {
+			font-size: 18px;
+			line-height: 1.6;
+			color: #34495e;
+			margin-bottom: 40px;
+		}
+
+		/* 特色區塊樣式 */
+		.index-features {
+			display: flex;
+			justify-content: space-between;
+			gap: 30px;
+			margin-bottom: 40px;
+		}
+
+		.feature-card {
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			width: 30%;
+			text-align: center;
+			transition: transform 0.3s ease;
+		}
+
+		.feature-card:hover {
+			transform: translateY(-10px);
+		}
+
+		.feature-card h3 {
+			font-size: 22px;
+			color: #1abc9c;
+			margin-bottom: 10px;
+		}
+
+		.feature-card p {
+			font-size: 16px;
+			color: #7f8c8d;
+		}
+
+		/* Call to Action 按鈕 */
+		.call-to-action {
+			margin-top: 40px;
+		}
+
+		.call-to-action h3 {
+			font-size: 28px;
+			color: #34495e;
+			margin-bottom: 10px;
+		}
+
+		.call-to-action p {
+			font-size: 18px;
+			color: #7f8c8d;
+			margin-bottom: 20px;
+		}
+
+		.call-to-action .btn-cta {
+			display: inline-block;
+			padding: 14px 30px;
+			font-size: 18px;
+			background-color: #1abc9c;
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+			text-decoration: none;
+		}
+
+		.call-to-action .btn-cta:hover {
+			background-color: #16a085;
+		}
+    </style>
+</head>
+<body class="left-nav">
+    <div class="header">
+        <div class="site-title">茄芷袋展示網站</div>
+        <div class="social-bar" id="socialBar">
+            <a href="https://facebook.com" target="_blank" class="social-icon facebook"></a>
+            <a href="https://instagram.com" target="_blank" class="social-icon instagram"></a>
+            <a href="https://line.me" target="_blank" class="social-icon line"></a>
+        </div>
+    </div>
+
+    <nav id="sideNav">
+        <div class="toggle-button" onclick="toggleNavPosition()">聽說你想到對面</div>
+        <a href="#index">回到首頁</a>
+        <a href="#FAQ">常見問題</a>
+        <a href="#history">產品背景</a>
+        <a href="#product">產品介紹</a>
+        <a href="#case">客戶案例</a>
+        <a href="#contact">聯絡我們</a>
+    </nav>
+
+    <main>
+		<section id="index">
+			<div class="index-container">
+				<h2>茄芷袋，讓生活更美好</h2>
+				<p>茄芷袋是我們最新的創新產品，專為現代生活設計，結合時尚與實用，讓每一天都更方便、更有品味。</p>
+				<div class="index-features">
+					<div class="feature-card">
+						<h3>環保材質</h3>
+						<p>採用天然的環保材料，減少對環境的影響，讓您在使用的同時，也能保護地球。</p>
+					</div>
+					<div class="feature-card">
+						<h3>多功能設計</h3>
+						<p>無論是日常使用還是旅行出行，茄芷袋的多功能設計讓您隨時隨地都能輕鬆攜帶所有必需品。</p>
+					</div>
+					<div class="feature-card">
+						<h3>時尚與實用兼具</h3>
+						<p>現代設計風格，時尚又不失實用性，無論搭配任何服裝都能提升您的整體造型。</p>
+					</div>
+				</div>
+				<div class="call-to-action">
+					<h2>立即擁有您的茄芷袋</h2>
+					<p>走在時尚尖端，讓茄芷袋成為您日常生活的一部分。</p>
+				</div>
+			</div>
+		</section>
+
+		<section id="FAQ">
+			<h2>常見問題</h2>
+			<p>&nbsp;&nbsp;&nbsp;</p>
+			<div class="faq-container">
+				<div class="faq-item">
+					<h3>茄芷袋有哪些特色？</h3>
+					<p>防水、耐重、時尚設計，適合多種用途。</p>
+				</div>
+				<div class="faq-item">
+					<h3>茄芷袋的材質是什麼？</h3>
+					<p>主要使用尼龍網布製作，具備防水、耐磨與輕便特性。</p>
+				</div>
+				<div class="faq-item">
+					<h3>茄芷袋有哪些尺寸可以選擇？</h3>
+					<p>提供小型、中型和大型尺寸，滿足不同的使用需求。</p>
+				</div>
+				<div class="faq-item">
+					<h3>茄芷袋可以清洗嗎？</h3>
+					<p>可以！輕度污漬可用濕布擦拭，重度污漬則用中性清潔劑手洗後自然晾乾。</p>
+				</div>
+				<div class="faq-item">
+					<h3>茄芷袋可以承重多少重量？</h3>
+					<p>根據尺寸不同，平均可承受 5-15 公斤的重量。</p>
+				</div>
+				<div class="faq-item">
+					<h3>茄芷袋是台灣製造的嗎？</h3>
+					<p>是的，所有茄芷袋皆在台灣製造，保留傳統工藝精神。</p>
+				</div>
+				<div class="faq-item">
+					<h3>茄芷袋有哪些使用場合？</h3>
+					<p>適合日常購物、上班通勤、外出旅遊，或作為贈品與紀念品使用。</p>
+				</div>
+				<div class="faq-item">
+					<h3>茄芷袋能否客製化？</h3>
+					<p>提供客製化服務，可選擇顏色、尺寸，並印製專屬圖案或品牌標誌。</p>
+				</div>
+				<div class="faq-item">
+					<h3>如何下單購買茄芷袋？</h3>
+					<p>可透過官方網站選購，提供信用卡、ATM 轉帳與貨到付款等多種支付方式。</p>
+				</div>
+				<div class="faq-item">
+					<h3>運費如何計算？</h3>
+					<p>單筆訂單滿 1,000 元免運費，未滿 1,000 元則收取 80 元運費。</p>
+				</div>
+				<div class="faq-item">
+					<h3>訂單多久可以送達？</h3>
+					<p>一般 3-5 個工作天內送達，特殊情況下可能會略有延遲。</p>
+				</div>
+			</div>
+		</section>
+
+        <section id="history">
+			<h2>產品背景</h2>
+			<p>&nbsp;&nbsp;&nbsp;</p>
+			<p>&nbsp;&nbsp;&nbsp;</p>
+			<p>&nbsp;&nbsp;&nbsp;</p>
+			<div class="history-content">
+				<p>
+					茄芷袋，又稱加薦仔、茭薦仔，是台灣流傳已久的傳統手提包，擁有獨特的文化底蘊與時代記憶。茄芷袋的上邊略闊於下邊，外觀樸實卻功能多樣，可作為書包、文件包或手挽袋使用，成為早期台灣人生活中的重要物件。 
+				</p>
+				<p>
+					茄芷袋起源於台南市後壁區菁寮里，最初由「茳芏」（三角藺草）手工編織而成，因製作過程繁複，熟練的工匠一天最多也只能編織五、六個，當時一個袋子僅以二、三塊錢賣出。製作茄芷袋的藺草需經過曝曬、輾壓等多道工序，輾壓時加入米糠，利用其中的油脂讓藺草更加滑順，便於編織成草袋、草繩或其他生活用品。 
+				</p>
+				<p>
+					隨著時代變遷，1971年後土地重劃，農夫們改種經濟價值更高的水稻；同時，塑膠製品開始興起，傳統的藺草材料逐漸被防水、耐磨的尼龍布取代，茄芷袋也因此轉型成了半透明的尼龍網布手挽袋。經典的紅、綠、藍三色橫條紋圖樣，成為茄芷袋最具代表性的設計風格。 
+				</p>
+				<p>
+					茄芷袋的名稱，相傳源自日文「かぎ針編み」（kagibariami）；韓國稱它為「台灣傳統袋」，並音譯為茄芷袋；英文則根據台語發音取名為「GAJI」。無論名稱如何變化，茄芷袋始終承載著台灣人的集體回憶，樸實無華卻歷久彌新，低調地在我們的日常生活中扮演著重要角色。 
+				</p>
+				<p>
+					如今，我們致力於將這份傳統重新詮釋，結合現代設計理念，打造兼具懷舊情懷與實用性的茄芷袋，讓這份台灣的文化資產，繼續陪伴我們走向未來。
+				</p>
+			</div>
+		</section>
+
+        <section id="product">
+		<h2>產品介紹</h2>
+			<div class="product-images">
+				<div class="product-image" id="product1" onclick="toggleProduct(1)">
+					<img src="img/001.png" alt="Product 1">
+					<p class="product-title">大號款茄芷袋</p>
+				</div>
+				<p>&nbsp;&nbsp;&nbsp;</p>
+				<div class="product-image" id="product2" onclick="toggleProduct(2)">
+					<img src="img/002.jpeg" alt="Product 2">
+					<p class="product-title">創意款茄芷袋</p>
+				</div>
+				<p>&nbsp;&nbsp;&nbsp;</p>
+				<div class="product-image" id="product3" onclick="toggleProduct(3)">
+					<img src="img/003.jpeg" alt="Product 3">
+					<p class="product-title">經典款茄芷袋</p>
+				</div>
+			</div>
+
+			<div id="product1-description" class="product-description">
+				<h3>大號款茄芷袋 介紹</h3>
+				<p><span style="color: #1abc9c;">大容量設計：</span>提供充足的空間，能夠輕鬆放入筆記型電腦、書籍、衣物等。</p>
+				<p><span style="color: #1abc9c;">耐用材質：</span>選用高品質的材質，確保袋子長時間使用不易損壞。</p>
+				<p><span style="color: #1abc9c;">時尚外觀：</span>簡約又具有現代感的設計，適合各種場合使用，無論是工作還是休閒。</p>
+				<p><span style="color: #1abc9c;">舒適攜帶：</span>配有加厚肩帶，減少肩部負擔，長時間攜帶也不會感到不適。</p>
+			</div>
+			
+			<div id="product2-description" class="product-description">
+				<h3>創意款茄芷袋</h3>
+				<p><span style="color: #1abc9c;">個性化設計：</span>可根據需求自選圖案、顏色、文字，打造專屬的茄芷袋。</p>
+				<p><span style="color: #1abc9c;">高品質材質：</span>選用優質材料，耐用且輕便，適合日常使用。</p>
+				<p><span style="color: #1abc9c;">實用與舒適：</span>不僅具備時尚外觀，更注重實用性與舒適感。</p>
+				<p><span style="color: #1abc9c;">禮品袋選擇：</span>無論是自己使用或作為禮物，都能帶來無限驚喜。</p>
+			</div>
+			
+			<div id="product3-description" class="product-description">
+				<h3>經典款茄芷袋 介紹</h3>
+				<p><span style="color: #1abc9c;">簡約的設計：</span>適合多種場合，簡單實用</p>
+				<p><span style="color: #1abc9c;">耐用高品質：</span>使用優質材料，結構牢固，承重力強，長久耐用。</p>
+				<p><span style="color: #1abc9c;">多功能設計：</span>適合日常購物、外出、旅行等多種用途。</p>
+				<p><span style="color: #1abc9c;">環保的選擇：</span>拒絕一次性塑料袋，茄芷袋的環保理念不僅時尚，更為地球出一份力</p>
+			</div>
+		</section>
+
+        <section id="case">
+			<h2>客戶案例</h2>
+			<div class="case-container">
+				<div class="case-card">
+					<p class="quote">「已購買，小孩很喜歡。」</p>
+					<p class="customer">陳一</p>
+				</div>
+				
+				<div class="case-card">
+					<p class="quote">「茄芷袋真的很好用！質感超棒又耐用。」</p>
+					<p class="customer">王二</p>
+				</div>
+
+				<div class="case-card">
+					<p class="quote">「買了幾個，家裡的收納整齊多了！」</p>
+					<p class="customer">張三</p>
+				</div>
+				<div class="case-card">
+					<p class="quote">「出門逛街總是帶著它，手提袋輕巧又結實。」</p>
+					<p class="customer">李四</p>
+				</div>
+			</div>
+		</section>
+
+        <section id="contact">
+			<div class="contact-container">
+				<!-- 聯絡標題 -->
+				<div class="contact-title" style="position: relative; left: -135px; top: 60px;">
+					<h2 style="color: #1abc9c;">聯絡我們</h2>
+				</div>
+
+				<!-- 聯絡表單 -->
+				<form id="contact-form" style="margin-top: 0px;">
+					<h3 style="text-align: left; font-size: 22px; color: #34495e; font-weight: bold; margin-bottom: 10px;">問題反應</h3>
+					<input type="text" id="name" name="name" placeholder="請輸入您的姓名" required>
+					<input type="email" id="email" name="email" placeholder="請輸入您的電子郵件" required>
+					<textarea id="message" name="message" rows="4" placeholder="請輸入您的留言" required></textarea>
+					<button type="submit">送出</button>
+				</form>
+
+				<!-- 聯絡資訊區塊 -->
+				<div class="contact-info" style="margin-top: 0px;">
+					<h3>負責人</h3>
+					<p>五七藝品 鄒秋蘭</p>
+					<h4>Email</h4>
+					<p><a href="mailto:support@example.com">support@example.com</a></p>
+					<h4>社群連結</h4>
+					<div class="social-links">
+						<a href="#" class="social-button">
+							<img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
+						</a>
+						<a href="#" class="social-button">
+							<img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram">
+						</a>
+						<a href="#" class="social-button">
+							<img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" alt="Twitter">
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		
+<p style="text-align: center; font-size: 14px; color: #7f8c8d; margin-top: 50px;">&copy; 2024 五七藝品. 版權所有.</p>
+
+
+    </main>
+
+    <script>
+        function toggleNavPosition() {
+            const body = document.body;
+            const mainContent = document.querySelector("main");
+
+            // 切換左側或右側的 class
+            if (body.classList.contains('left-nav')) {
+                body.classList.remove('left-nav');
+                body.classList.add('right-nav');
+                mainContent.style.marginLeft = "0"; // 主內容不偏移
+                mainContent.style.marginRight = "250px"; // 主內容向左平移
+            } else {
+                body.classList.remove('right-nav');
+                body.classList.add('left-nav');
+                mainContent.style.marginLeft = "250px"; // 主內容向右平移
+                mainContent.style.marginRight = "0"; // 主內容不偏移
+            }
+        }
+		
+		function toggleProduct(productNumber) {
+		const description = document.getElementById('product' + productNumber + '-description');
+		const images = document.querySelectorAll('.product-image');
+		
+		// 如果點擊的圖片對應的介紹是隱藏的
+		if (description.style.display === 'none' || description.style.display === '') {
+			// 顯示對應介紹並隱藏其他圖片
+			description.style.display = 'block';
+			images.forEach((image, index) => {
+				if (index + 1 !== productNumber) {
+					image.style.display = 'none';
+				}
+			});
+		} else {
+			// 收起介紹並顯示所有圖片
+			description.style.display = 'none';
+			images.forEach((image) => {
+				image.style.display = 'block';
+			});
+		}
+	}
+
+    </script>
+</body>
+</html>
